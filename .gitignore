@@ -199,3 +199,4 @@ cython_debug/
 
 # Database
 *.sqlite3
+my_django_environment/
