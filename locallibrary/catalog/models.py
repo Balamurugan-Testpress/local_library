@@ -133,6 +133,10 @@ class Author(models.Model):
     def get_absolute_url(self):
         """Returns the URL to access a particular author instance."""
         return reverse('author-detail', args=[str(self.id)])
+    
+    
+    def books_list(self):
+        return list(self.book_set.all())  
 
     def __str__(self):
         """String for representing the Model object."""
