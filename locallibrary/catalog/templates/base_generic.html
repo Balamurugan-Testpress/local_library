@@ -35,7 +35,7 @@
                   <li>
                     <a href="{% url 'my-borrowed' %}">My Borrowed</a>
                   </li>
-                {% elif is_librarian %}
+                {% elif not is_user %}
                   <li>
                     <a href="{% url 'borrowed-books' %}">Borrowed Books</a>
                   </li>
