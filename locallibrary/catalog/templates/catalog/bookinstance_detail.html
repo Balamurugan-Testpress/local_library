@@ -1,0 +1,40 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>Book Instance Details</h1>
+
+  <p>
+    <strong>Book Title:</strong> {{ bookinstance.book.title }}
+  </p>
+  <p>
+    <strong>Imprint:</strong> {{ bookinstance.imprint }}
+  </p>
+  <p>
+    <strong>Due Back:</strong> {{ bookinstance.due_back|date:'F j, Y' }}
+  </p>
+  <p>
+    <strong>Status:</strong> {{ bookinstance.get_status_display }}
+  </p>
+
+  {% if bookinstance.borrower %}
+    <p>
+      <strong>Borrower:</strong> {{ bookinstance.borrower }}
+    </p>
+  {% else %}
+    <p>
+      <strong>Borrower:</strong> None
+    </p>
+  {% endif %}
+
+  {% if bookinstance.is_overdue %}
+    <p style="color: red;">
+      <strong>This copy is overdue!</strong>
+    </p>
+  {% endif %}
+
+  <p>
+    <strong>Instance ID:</strong> {{ bookinstance.id }}
+  </p>
+
+  <a href="{% url 'books' %}">Back to Book List</a>
+{% endblock %}
