@@ -10,7 +10,7 @@ from .models import BookInstance
 
 class RenewBookForm(forms.Form):
     renewal_date = forms.DateField(
-        help_text="Enter a date between now and 4 weeks (Defualt is 3)."
+        help_text="Enter a date between now and 4 weeks (default is 3)."
     )
 
     def clean_renewal_date(self):
