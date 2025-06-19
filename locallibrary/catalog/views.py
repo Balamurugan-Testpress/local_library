@@ -54,6 +54,10 @@ class AuthorDetailView(generic.DetailView):
     model = Author
 
 
+class BookInstanceDetailView(generic.DetailView):
+    model = BookInstance
+
+
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view listing books on loan to current user."""
 
@@ -134,7 +138,6 @@ class AuthorCreate(PermissionRequiredMixin, CreateView):
 
 class AuthorUpdate(PermissionRequiredMixin, UpdateView):
     model = Author
-    # Not recommended (potential security issue if more fields added)
     fields = "__all__"
     permission_required = "catalog.change_author"
 
@@ -143,6 +146,33 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
     model = Author
     success_url = reverse_lazy("authors")
     permission_required = "catalog.delete_author"
+
+    def form_valid(self, form):
+        try:
+            self.object.delete()
+            return HttpResponseRedirect(self.success_url)
+        except Exception as e:
+            return HttpResponseRedirect(
+                reverse("author-delete", kwargs={"pk": self.object.pk})
+            )
+
+
+class BookCreate(PermissionRequiredMixin, CreateView):
+    model = Book
+    fields = "__all__"
+    permission_required = "catalog.add_book"
+
+
+class BookUpdateView(PermissionRequiredMixin, UpdateView):
+    model = Book
+    fields = "__all__"
+    permission_required = "catalog.change_book"
+
+
+class BookDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Book
+    permission_required = "catalog.delete_book"
+    success_url = reverse_lazy("books")
 
     def form_valid(self, form):
         try:

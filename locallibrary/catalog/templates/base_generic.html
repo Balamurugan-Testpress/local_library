@@ -58,6 +58,24 @@
                   {% endif %}
                 {% endif %}
 
+                {% if perms.catalog.add_book %}
+                  <li>
+                    <a href="{% url 'book-create' %}">Create book</a>
+                  </li>
+                  {% if book %}
+                    {% if perms.catalog.change_book %}
+                      <li>
+                        <a href="{% url 'book-update' book.id %}">Update book</a>
+                      </li>
+                    {% endif %}
+                    {% if perms.catalog.delete_book %}
+                      <li>
+                        <a href="{% url 'book-delete' book.id %}">Delete book</a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+
                 <li>
                   <form id="logout-form" method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
